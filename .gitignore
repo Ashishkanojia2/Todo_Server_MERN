@@ -1,3 +1,2 @@
-# /node_modules
-# /extrafile
-/config/config.env
+/node_modules
+/extrafile
