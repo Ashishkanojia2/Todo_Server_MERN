@@ -3,6 +3,7 @@ import {
   addTaks,
   forgetPassword,
   getMyProfile,
+  home,
   login,
   logout,
   register,
@@ -16,6 +17,8 @@ import {
 import { isAuthenticated } from "../middleware/auth.js";
 
 const router = express.Router();
+
+router.route('/').get(home)
 
 // router.route('/register').post((req, res)=>{})       // asse bee kr skte hai but code clean likhna hai
 router.route("/register").post(register);

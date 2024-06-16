@@ -6,6 +6,11 @@ import cloudinary from "cloudinary";
 
 import fs from "fs";
 
+//HOME ROUTE
+export const home = async (req, res) => {
+  res.send("working node js server")
+};
+
 // REGISTER USER ACCOUNT
 export const register = async (req, res) => {
   try {
@@ -346,7 +351,9 @@ export const updateProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     const { name } = req.body;
@@ -388,7 +395,6 @@ export const updateProfile = async (req, res) => {
     });
   }
 };
-
 
 // UPDATE Password
 export const updatePassword = async (req, res) => {
