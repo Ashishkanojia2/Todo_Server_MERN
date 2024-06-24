@@ -32,7 +32,7 @@ router.route("/logout").get(logout);
 router.route("/me").get(isAuthenticated , getMyProfile);
 
 //ADD USER TASK
-router.route("/newtask").get(isAuthenticated, addTaks);
+router.route("/newtask").post(isAuthenticated, addTaks);
 
 
 router.route("/updateprofile").put(isAuthenticated, updateProfile);
