@@ -8,7 +8,7 @@ import fs from "fs";
 
 //HOME ROUTE
 export const home = async (req, res) => {
-  res.send("working node js server")
+  res.send("working node js server");
 };
 
 // REGISTER USER ACCOUNT
@@ -142,6 +142,7 @@ export const login = async (req, res) => {
 
     // If password matches, send token for successful login
     sendToken(res, user, 200, "Login Successful");
+    // res.status(400).json({ user: user });
   } catch (error) {
     console.log(
       res.status(500).json({

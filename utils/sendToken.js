@@ -7,7 +7,7 @@ export const sendToken = (res, user, statusCode, message) => {
     name: user.name,
     email: user.email,
     avatar: user.avatar,
-    tasks: user.tasks,
+    task: user.task,
     verified :user.verified
   };
   const token = user.getJWTtoken();
