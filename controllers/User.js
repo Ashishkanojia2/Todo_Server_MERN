@@ -122,7 +122,7 @@ export const login = async (req, res) => {
     }
 
     // Find the user by email and explicitly include the password field
-    const user = await User.findOne({ email }).select("+password", "+task" ,"+createdAt");
+    const user = await User.findOne({ email }).select("+password");
     console.log(user, "Fetched user with password field");
     if (!user) {
       return res.status(400).json({
