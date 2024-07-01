@@ -415,7 +415,7 @@ export const updatePassword = async (req, res) => {
     if (!isMatch)
       return res.status(500).json({
         success: false,
-        message: `Invalid Password`,
+        message: `Invalid Password password doesn't match`,
       });
     user.password = newPassword;
 
