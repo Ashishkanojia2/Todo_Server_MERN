@@ -5,6 +5,7 @@ import { sendToken } from "../utils/sendToken.js";
 import cloudinary from "cloudinary";
 
 import fs from "fs";
+import { log } from "console";
 
 //HOME ROUTE
 export const home = async (req, res) => {
@@ -398,39 +399,88 @@ export const updateProfile = async (req, res) => {
 };
 
 // UPDATE Password
+// export const updatePassword = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.id).select("+password");
+//     console.log('user me kya mill raha hai' , user);
+
+//     const { oldPassword, newPassword } = req.body;
+//     console.log(oldPassword , newPassword);
+//     if (!oldPassword || !newPassword) {
+//       res.status(400).json({
+//         success: false,
+//         message: `Please Enter all Field`,
+//       });
+//     }
+
+//     const isMatch = await user.comparePassword(oldPassword);
+//     console.log('value of is match' ,isMatch);
+
+//     if (!isMatch)
+//       return res.status(500).json({
+//         success: false,
+//         message: `Invalid Password password doesn't match`,
+//       });
+//     user.password = newPassword;
+
+//     await user.save();
+//     res.status(200).json({
+//       success: true,
+//       message: `Password updated Successfully`,
+//     });
+//   } catch (error) {
+//     console.log(
+//       res.status(500).json({
+//         success: false,
+//         message: `Catch Case --> ${error.message}`,
+//       })
+//     );
+//   }
+// };
 export const updatePassword = async (req, res) => {
   try {
+    const { oldPassword, newPassword } = req.body;
+
+    // Input validation
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: `Please provide both oldPassword and newPassword.`,
+      });
+    }
+
     const user = await User.findById(req.user.id).select("+password");
 
-    const { oldPassword, newPassword } = req.body;
-    if (!oldPassword || !newPassword) {
-      res.status(400).json({
+    if (!user) {
+      return res.status(404).json({
         success: false,
-        message: `Please Enter all Field`,
+        message: `User not found.`,
       });
     }
 
     const isMatch = await user.comparePassword(oldPassword);
 
-    if (!isMatch)
-      return res.status(500).json({
+    if (!isMatch) {
+      return res.status(400).json({
         success: false,
-        message: `Invalid Password password doesn't match`,
+        message: `Current password is incorrect.`,
       });
-    user.password = newPassword;
+    }
 
+    // Update password
+    user.password = newPassword;
     await user.save();
+
     res.status(200).json({
       success: true,
-      message: `Password updated Successfully`,
+      message: `Password updated successfully.`,
     });
   } catch (error) {
-    console.log(
-      res.status(500).json({
-        success: false,
-        message: `Catch Case --> ${error.message}`,
-      })
-    );
+    console.error("Error in updatePassword:", error);
+    res.status(500).json({
+      success: false,
+      message: `Failed to update password. ${error.message}`,
+    });
   }
 };
 
